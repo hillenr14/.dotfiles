@@ -7,7 +7,7 @@ echo $1 | sudo -S pwd > /dev/null
 
 ### OPTIONS AND VARIABLES ###
 
-dotfilesrepo="https://github.com/hillenr14/voidrice.git"
+dotfilesrepo="https://github.com/hillenr14/.dotfiles.git"
 progsfile="https://github.com/hillenr14/LARBS/raw/master/progs.csv"
 aurhelper="yay"
 repobranch="master"
@@ -103,8 +103,13 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 	
 gitclone() {
 	progname="$(basename "$1" .git)"
-	echo "Cloning \`$progname\` ($n of $total) via \`git\`"
-	git clone "$1" >/dev/null 2>&1
+	if [[ -d "$progname" ]]
+	then
+		echo "Git repo \`$progname\` already cloned \n"
+	else
+		echo "Cloning \`$progname\` ($n of $total) via \`git\`"
+		git clone "$1" >/dev/null 2>&1
+	fi
 	}
 
 slink(){ \
@@ -150,9 +155,13 @@ ntpdate 0.us.pool.ntp.org >/dev/null 2>&1
 # and all build dependencies are installed.
 installationloop
 
+cd ~
+gitclone $dotfilesrepo
+
 # Make zsh the default shell for the user.
 sudo sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 
 # Creating links
 
-slink .vimrc .dotfiles/vim/.vimrc
+slink .vimrc .dotfiles/nvim/init.vim
+slink .zshrc .dotfiles/zsh/.zshrc
