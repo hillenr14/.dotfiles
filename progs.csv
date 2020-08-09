@@ -1,6 +1,8 @@
 #TAG,NAME IN REPO,PURPOSE
 ,zsh,"ZSH shell"
 A,lf-git,"is an extensive terminal file manager that everyone likes."
+,man-db,"man database"
+,man-pages,"man pages"
 ,calcurse,"is a lightweight terminal-based calendar."
 ,neovim,"a tidier vim with some useful features"
 ,newsboat,"is a terminal RSS client."
