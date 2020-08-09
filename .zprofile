@@ -15,26 +15,21 @@ export BROWSER="brave"
 export READER="zathura"
 
 # ~/ Clean-up:
-export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CONFIG_HOME="$HOME/.dotfiles"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_CACHE_HOME="$HOME/.cache"
-#export XAUTHORITY="$XDG_RUNTIME_DIR/Xauthority" # This line will break some DMs.
-export NOTMUCH_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/notmuch-config"
-export GTK2_RC_FILES="${XDG_CONFIG_HOME:-$HOME/.config}/gtk-2.0/gtkrc-2.0"
 export LESSHISTFILE="-"
-export WGETRC="${XDG_CONFIG_HOME:-$HOME/.config}/wget/wgetrc"
-export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.config}/inputrc"
-export ZDOTDIR="${XDG_CONFIG_HOME:-$HOME/.config}/zsh"
-export ALSA_CONFIG_PATH="$XDG_CONFIG_HOME/alsa/asoundrc"
-#export GNUPGHOME="$XDG_DATA_HOME/gnupg"
+export WGETRC="${XDG_CONFIG_HOME:-$HOME/.dotfiles}/wget/wgetrc"
+export INPUTRC="${XDG_CONFIG_HOME:-$HOME/.dotfiles}/inputrc"
+export ZDOTDIR="${HOME}/.dotfiles/zsh"
 export WINEPREFIX="${XDG_DATA_HOME:-$HOME/.local/share}/wineprefixes/default"
 export KODI_DATA="${XDG_DATA_HOME:-$HOME/.local/share}/kodi"
 export PASSWORD_STORE_DIR="${XDG_DATA_HOME:-$HOME/.local/share}/password-store"
 export TMUX_TMPDIR="$XDG_RUNTIME_DIR"
-export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.config}/android"
+export ANDROID_SDK_HOME="${XDG_CONFIG_HOME:-$HOME/.dotfiles}/android"
 export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
 export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
-export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.config}/ansible/ansible.cfg"
+export ANSIBLE_CONFIG="${XDG_CONFIG_HOME:-$HOME/.dotfiles}/ansible/ansible.cfg"
 
 # Other program settings:
 export DICS="/usr/share/stardict/dic/"
@@ -117,10 +112,10 @@ ex=🎯:\
 *.torrent=🔽:\
 "
 
-[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ] && shortcuts >/dev/null 2>&1 &
+#[ ! -f ${XDG_CONFIG_HOME:-$HOME/.config}/shortcutrc ] && shortcuts >/dev/null 2>&1 &
 
 # Start graphical server on tty1 if not already running.
 #[ "$(tty)" = "/dev/tty1" ] && ! ps -e | grep -qw Xorg && exec startx
 
 # Switch escape and caps if tty and no passwd required:
-sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null
+# sudo -n loadkeys ${XDG_DATA_HOME:-$HOME/.local/share}/larbs/ttymaps.kmap 2>/dev/null

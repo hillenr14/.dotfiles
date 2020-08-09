@@ -2,13 +2,13 @@
 
 ### sudo password argument
 
-echo -e "Testing sudo password ...\n"  
+echo -e "Testing sudo password ..."
 echo $1 | sudo -S pwd > /dev/null
 
 ### OPTIONS AND VARIABLES ###
 
 dotfilesrepo="https://github.com/hillenr14/.dotfiles.git"
-progsfile="https://github.com/hillenr14/LARBS/raw/master/progs.csv"
+progsfile="https://github.com/hillenr14/.dotfiles/raw/master/progs.csv"
 aurhelper="yay"
 repobranch="master"
 
@@ -23,6 +23,7 @@ elif type apt >/dev/null 2>&1; then
 else
 	distro="arch"
 	installpkg(){ sudo pacman --noconfirm --needed -S "$1" >/dev/null 2>&1 ;}
+	uninstallpkg(){ sudo pacman --noconfirm -R "$1" >/dev/null 2>&1 ;}
 	grepseq="\"^[PGA]*,\""
 fi
 
@@ -33,19 +34,15 @@ refreshkeys() { \
 	echo sudo pacman --noconfirm -Sy archlinux-keyring >/dev/null 2>&1
 	}
 
-newperms() { # Set special sudoers settings for install (or after).
-	sed -i "/#LARBS/d" /etc/sudoers
-	echo "$* #LARBS" >> /etc/sudoers ;}
-
 manualinstall() { # Installs $1 manually if not installed. Used only for AUR helper here.
 	[ -f "/usr/bin/$1" ] || (
 	echo -e "Installing \"$1\", an AUR helper...\n"
 	cd /tmp || exit
 	rm -rf /tmp/"$1"*
 	curl -sO https://aur.archlinux.org/cgit/aur.git/snapshot/"$1".tar.gz &&
-	echo sudo_psw | sudo -S -u "$name" tar -xvf "$1".tar.gz >/dev/null 2>&1 &&
+	tar -xvf "$1".tar.gz >/dev/null 2>&1 &&
 	cd "$1" &&
-	echo sudo_psw | sudo -S -u "$name" makepkg --noconfirm -si >/dev/null 2>&1
+	makepkg --noconfirm -si >/dev/null 2>&1
 	cd /tmp || return) ;}
 
 maininstall() { # Installs all needed programs from main repo.
@@ -64,13 +61,13 @@ gitmakeinstall() {
 	cd /tmp || return ;}
 
 aurinstall() { \
-	echo "LARBS - Installing \`$1\` ($n of $total) from the AUR. $1 $2"
+	echo "Installing \`$1\` ($n of $total) from the AUR. $1 $2"
 	echo "$aurinstalled" | grep "^$1$" >/dev/null 2>&1 && return
-	echo sudo_psw | sudo -S -u "$name" $aurhelper -S --noconfirm "$1" >/dev/null 2>&1
+	$aurhelper -S --noconfirm "$1" >/dev/null 2>&1
 	}
 
 pipinstall() { \
-	echo "LARBS - Installing the Python package \`$1\` ($n of $total). $1 $2"
+	echo "Installing the Python package \`$1\` ($n of $total). $1 $2"
 	command -v pip || installpkg python-pip >/dev/null 2>&1
 	yes | pip install "$1"
 	}
@@ -100,12 +97,12 @@ putgitrepo() { # Downloads a gitrepo $1 and places the files in $2 only overwrit
 	sudo -u "$name" git clone --recursive -b "$branch" --depth 1 "$1" "$dir" >/dev/null 2>&1
 	sudo -u "$name" cp -rfT "$dir" "$2"
 	}
-	
+
 gitclone() {
 	progname="$(basename "$1" .git)"
 	if [[ -d "$progname" ]]
 	then
-		echo "Git repo \`$progname\` already cloned \n"
+		echo "Git repo \`$progname\` already cloned"
 	else
 		echo "Cloning \`$progname\` ($n of $total) via \`git\`"
 		git clone "$1" >/dev/null 2>&1
@@ -113,8 +110,8 @@ gitclone() {
 	}
 
 slink(){ \
-	if [ -e $1 -a ! -L $1 ]; then
-		echo "Replacing $vim with link to $2"
+	if [ -e $1 ] || [ -L $1 ]; then
+		echo "Replacing $1 with link to $2"
 		rm $1
 		ln -s $2 $1
 	elif [ ! -e $1 ]; then
@@ -128,13 +125,17 @@ slink(){ \
 # Refresh Arch keyrings.
 # refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
 
-echo "LARBS - Installing \`basedevel\` and \`git\` for installing other software required for the installation of other programs."
+# Update Arch
+echo "Updating and Upgrading"
+sudo pacman -Suyy >/dev/null 2>&1
+echo "Installing \`basedevel\` and \`git\` for installing other software required for the installation of other programs."
 installpkg curl
+uninstallpkg fakeroot-tcp
 installpkg base-devel
 installpkg git
 installpkg ntp
 
-echo "LARBS - Synchronizing system time to ensure successful and secure installation of software..."
+echo "Synchronizing system time to ensure successful and secure installation of software..."
 ntpdate 0.us.pool.ntp.org >/dev/null 2>&1
 
 [ "$distro" = arch ] && { \
@@ -163,5 +164,7 @@ sudo sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 
 # Creating links
 
-slink .vimrc .dotfiles/nvim/init.vim
+mkdir -p ~/.local/bin
+slink .config/nvim/init.vim ~/.dotfiles/nvim/init.vim
 slink .zshrc .dotfiles/zsh/.zshrc
+slink .zprofile .dotfiles/.zprofile
