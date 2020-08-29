@@ -165,6 +165,8 @@ sudo sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 # Creating links
 
 mkdir -p ~/.local/bin
+mkdir -p ~/.cache/zsh
+touch ~/.cache/zsh/history
 slink .config/nvim/init.vim ~/.dotfiles/nvim/init.vim
 slink .zshrc .dotfiles/zsh/.zshrc
 slink .zprofile .dotfiles/.zprofile

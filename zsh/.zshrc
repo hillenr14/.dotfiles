@@ -96,3 +96,10 @@ POWERLEVEL9K_DIR_ETC_BACKGROUND='lightgoldenrod2'
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh 2>/dev/null
 # Load syntax highlighting; should be last.
 source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh 2>/dev/null
+
+# Point display to windows host IP when running in WSL
+[ -z "$WSL_INTEROP" ] && export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
+[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
+
+# Set other-writable directory color to purple (0;35) iso blue on green background (34,42)
+LS_COLORS=$LS_COLORS:'ow=0;35:' ; export LS_COLORS
