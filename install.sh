@@ -127,7 +127,7 @@ slink(){ \
 
 # Update Arch
 echo "Updating and Upgrading"
-sudo pacman -Suyy >/dev/null 2>&1
+sudo pacman -Suyy --noconfirm >/dev/null 2>&1
 echo "Installing \`basedevel\` and \`git\` for installing other software required for the installation of other programs."
 installpkg curl
 uninstallpkg fakeroot-tcp
