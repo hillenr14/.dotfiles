@@ -166,6 +166,7 @@ sudo sed -i "s/^$name:\(.*\):\/bin\/.*/$name:\1:\/bin\/zsh/" /etc/passwd
 
 mkdir -p ~/.local/bin
 mkdir -p ~/.cache/zsh
+mkdir -p ~/.config/nvim
 touch ~/.cache/zsh/history
 slink .config/nvim/init.vim ~/.dotfiles/nvim/init.vim
 slink .zshrc .dotfiles/zsh/.zshrc
