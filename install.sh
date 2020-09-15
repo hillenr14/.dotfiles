@@ -137,6 +137,10 @@ installpkg ntp
 installpkg grep
 installpkg sed
 installpkg sudo
+installpkg binutils
+installpkg go
+installpkg make
+installpkg gcc
 
 echo "Synchronizing system time to ensure successful and secure installation of software..."
 ntpdate 0.us.pool.ntp.org >/dev/null 2>&1
