@@ -23,6 +23,7 @@
 ,texinfo,"from base-devel package group"
 ,which,"from base-devel package group"
 ,zsh,"ZSH shell"
+,highlight, "syntax highlighting in less"
 A,lf-git,"is an extensive terminal file manager that everyone likes."
 ,man-db,"man database"
 ,man-pages,"man pages"
