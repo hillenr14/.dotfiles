@@ -130,10 +130,11 @@ echo "Updating and Upgrading"
 sudo pacman -Suyy --noconfirm >/dev/null 2>&1
 echo "Installing \`basedevel\` and \`git\` for installing other software required for the installation of other programs."
 installpkg curl
-uninstallpkg fakeroot-tcp
-installpkg base-devel
 installpkg git
 installpkg ntp
+installpkg grep
+installpkg sed
+installpkg sudo
 
 echo "Synchronizing system time to ensure successful and secure installation of software..."
 ntpdate 0.us.pool.ntp.org >/dev/null 2>&1
