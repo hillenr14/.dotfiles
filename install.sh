@@ -124,6 +124,8 @@ slink(){ \
 
 # Refresh Arch keyrings.
 # refreshkeys || error "Error automatically refreshing Arch keyring. Consider doing so manually."
+sudo pacman-key --init >/dev/null 2>&1
+sudo pacman-key --populate archlinux >/dev/null 2>&1
 
 # Update Arch
 echo "Updating and Upgrading"
