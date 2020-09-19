@@ -2,3 +2,4 @@ nvim/autoload/
 nvim/plugged/
 tags
 zsh/.zcompdump
+bashtop/

@@ -103,3 +103,6 @@ source /usr/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.
 
 # Set other-writable directory color to purple (0;35) iso blue on green background (34,42)
 LS_COLORS=$LS_COLORS:'ow=0;35:' ; export LS_COLORS
+
+#set display to own IP
+#export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
