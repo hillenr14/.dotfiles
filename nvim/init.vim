@@ -44,8 +44,33 @@ set bg=light
 set go=a
 set mouse=a
 set nohlsearch
-set clipboard+=unnamedplus
 
+" clipboard settings ---------------------- {{{
+    set clipboard+=unnamedplus
+    func! GetSelectedText()
+        normal gv"xy
+        let result = getreg("x")
+        return result
+    endfunc
+	if executable("clip.exe")
+		noremap <C-C> :call system('clip.exe', GetSelectedText())<CR>
+		noremap <C-X> :call system('clip.exe', GetSelectedText())<CR>gvx
+		noremap <C-Insert> :call system('clip.exe', GetSelectedText())<CR>
+		noremap <S-Del> :call system('clip.exe', GetSelectedText())<CR>gvx
+    else
+        vnoremap <C-X> "+x
+        vnoremap <S-Del> "+x
+
+        vnoremap <C-C> "+y
+        vnoremap <C-Insert> "+y
+
+        map <C-V> "+gP
+        map <S-Insert> "+gP
+
+        cmap <C-V> <C-R>+
+        cmap <S-Insert> <C-R>+
+    endif
+" }}}
 " General settings ---------------------- {{{
     set path+=**
     set encoding=utf-8
