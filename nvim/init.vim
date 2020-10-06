@@ -1,5 +1,4 @@
 let mapleader =","
-
 if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/plug.vim"'))
     echo "Downloading junegunn/vim-plug to manage plugins..."
     silent !mkdir -p ${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autoload/
@@ -8,23 +7,28 @@ if ! filereadable(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/autolo
 endif
 
 call plug#begin(system('echo -n "${XDG_CONFIG_HOME:-$HOME/.config}/nvim/plugged"'))
-" Plug 'tpope/vim-surround'
+"Plug 'tpope/vim-surround'
 Plug 'preservim/nerdtree'
-" Plug 'junegunn/goyo.vim'
-Plug 'PotatoesMaster/i3-vim-syntax'
-" Plug 'jreybert/vimagit'
-" Plug 'lukesmithxyz/vimling'
+"Plug 'junegunn/goyo.vim'
+"Plug 'PotatoesMaster/i3-vim-syntax'
+"Plug 'jreybert/vimagit'
+"Plug 'lukesmithxyz/vimling'
 Plug 'vimwiki/vimwiki'
 Plug 'bling/vim-airline'
 Plug 'tpope/vim-commentary'
 "Plug 'kovetskiy/sxhkd-vim'
 Plug 'ap/vim-css-color'
-if v:version >= 800
-    Plug 'ludovicchabant/vim-gutentags' " create, maintain tags (using universal-ctags)
-endif
+"if v:version >= 800
+"    Plug 'ludovicchabant/vim-gutentags' " create, maintain tags (using universal-ctags)
+"endif
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'hillenr14/tech_support'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'airblade/vim-rooter'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
@@ -53,21 +57,21 @@ set nohlsearch
         return result
     endfunc
 	if executable("clip.exe")
-		noremap <C-C> :call system('clip.exe', GetSelectedText())<CR>
-		noremap <C-X> :call system('clip.exe', GetSelectedText())<CR>gvx
+		"noremap <C-C> :call system('clip.exe', GetSelectedText())<CR>
+		"noremap <C-X> :call system('clip.exe', GetSelectedText())<CR>gvx
 		noremap <C-Insert> :call system('clip.exe', GetSelectedText())<CR>
 		noremap <S-Del> :call system('clip.exe', GetSelectedText())<CR>gvx
     else
-        vnoremap <C-X> "+x
+        "vnoremap <C-X> "+x
         vnoremap <S-Del> "+x
 
-        vnoremap <C-C> "+y
+        "vnoremap <C-C> "+y
         vnoremap <C-Insert> "+y
 
-        map <C-V> "+gP
+        "map <C-V> "+gP
         map <S-Insert> "+gP
 
-        cmap <C-V> <C-R>+
+        "cmap <C-V> <C-R>+
         cmap <S-Insert> <C-R>+
     endif
 " }}}
@@ -120,7 +124,6 @@ set nohlsearch
 
     nnoremap <c-s> :wr<cr>
     nnoremap c "_c
-    let mapleader = ","
     nnoremap <leader>sv :source $MYVIMRC<cr>
     nnoremap <leader>ev :execute ":tabnew " . $MYVIMRC<cr>
     nnoremap <leader>j :lnext<cr>
@@ -170,6 +173,10 @@ set nohlsearch
 
     " Save file as sudo on files that require root permission
     cnoremap w!! execute 'silent! write !sudo tee % >/dev/null' <bar> edit!
+    " Map alt-v to ctrl-v because window terminal intercepts ctrl-v for paste
+    map <A-v> <C-v>
+    " Map terminal escape ctrl-\ ctrl-n to et (exit terminal)
+    tnoremap et <C-\><C-n>
 " }}}
 "File type specific settings ---------------------- {{{
     augroup filetype_s
@@ -206,3 +213,5 @@ autocmd BufWritepre * %s/\n\+\%$//e
 if &diff
     highlight! link DiffText MatchParen
 endif
+source $HOME/.dotfiles/nvim/fzf.vim
+source $HOME/.dotfiles/nvim/coc.vim

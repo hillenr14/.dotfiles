@@ -3,3 +3,7 @@ nvim/plugged/
 tags
 zsh/.zcompdump
 bashtop/
+coc/
+configstore/
+dlv/
+Wolfram/
