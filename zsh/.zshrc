@@ -108,3 +108,4 @@ LS_COLORS=$LS_COLORS:'ow=0;35:' ; export LS_COLORS
 #export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 #sync clock when logging in
 sudo hwclock -s
+export PATH="$HOME/go/bin:$PATH"
