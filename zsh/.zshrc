@@ -107,4 +107,6 @@ LS_COLORS=$LS_COLORS:'ow=0;35:' ; export LS_COLORS
 #set display to own IP
 #export DISPLAY=$(cat /etc/resolv.conf | grep nameserver | awk '{print $2}'):0.0
 #sync clock when logging in
-sudo hwclock -s
+#sudo hwclock -s
+# Add go bin dir to path
+ export PATH="$HOME/go/bin:$PATH"
